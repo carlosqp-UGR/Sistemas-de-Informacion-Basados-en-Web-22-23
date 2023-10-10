@@ -1,0 +1,83 @@
+* {
+	box-sizing: border-box;
+	margin:0;
+	padding:0;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	width: 95%;
+	min-height: 95%;
+	margin: 2.5% 2.5%;
+	background: #fff;
+	font-family: sans-serif;
+	font-size: 1.3rem;
+	color: #000;
+}
+
+aside {
+	display: none;
+}
+
+.header {
+	text-align: center;
+}
+
+#logo {
+    border-radius: 50%;
+    max-width: 100px;
+    padding: 0;
+}
+
+.header h1 {
+	padding: 15px;
+}
+
+.navbar {
+	display:none;
+}
+
+.sidebar {
+	display: none
+}
+
+/** cientifico.html **/
+.main-cientifico {
+	width: 75%;
+	margin: 0 12.5%;
+	text-align: justify;
+  	justify-content: center;
+  	align-content: center;
+  	padding: 20px;
+}
+
+.main-cientifico h2 {
+	text-align: center;
+}
+
+.main-cientifico p {
+	line-height: 1.6em;
+}
+
+.img-cientifico {
+    float: left;
+    margin: 10px 10px;
+    border-radius: 5px;
+    width: auto;
+    height: auto;
+    max-width: 50%;
+    margin: 10px 15px;
+    padding: 0;
+
+}
+
+.boton-social {
+	display:none;
+}
+
+.footer {
+	text-align: center;
+}

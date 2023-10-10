@@ -1,0 +1,111 @@
+{% extends "padre.html" %}
+    {% block estilo %}
+    {{parent()}}
+    <style>
+        .form-box {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button[type="submit"] {
+            padding: 8px 16px;
+            border: none;
+            background: #009cff;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-right: 12px;
+        }
+
+        button[type="submit"]:hover {
+            background: #0076bf;
+        }
+
+        .cancelar-btn {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            background: #fff;
+            color: #000;
+            cursor: pointer;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .cancelar-btn:hover {
+            background: #ccc;
+        }
+
+        .delete-button {
+            padding: 8px 16px;
+            border: none;
+            background: #ff0000;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-right: 12px;
+        }
+
+        .delete-button:hover {
+            background: #cc0000;
+        }
+
+
+    </style>
+    {% endblock %}
+
+    {% block main %}
+    <section class="main">
+        {% if user.roll == 'super' or user.roll == 'moderador' %}
+        <div class="form-box">
+            <h1>Agregar nuevo cientifico</h1>
+            <form action="guardar_cientifico.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="nombre">Nombre del Cientifico:</label>
+                    <input type="text" name="nombre">
+                </div>
+                <div class="form-group">
+                    <label for="portada">Imagen de Portada:</label>
+                    <input type="file" name="portada" id="portada">
+                </div>
+                <div class="form-group">
+                    <label for="contenido">Contenido:</label>
+                    <textarea name="contenido" id="form-comment-cnt" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="imagen">Imagen de Galeria:</label>
+                    <input type="file" name="imagen" id="imagen">
+                </div>
+                <button type="submit">Guardar cambios</button>
+                <button class="cancelar-btn" onclick="location.href='listado_cientificos.php'">Cancelar</button>
+            </form>
+            </div>
+        {% else %}
+            <h2>No tienes permiso para acceder a esta sección</h2>
+            <p>Por favor, inicia sesión con una cuenta con permisos</p>
+        {% endif %}
+    </section>
+    {% endblock %}

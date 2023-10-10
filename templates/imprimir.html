@@ -1,0 +1,21 @@
+{% extends "padre.html" %}
+
+	{%block estilo %}
+	<link rel="stylesheet" type="text/css" href="css/imprimir.css">
+	{% endblock %}
+
+	{% block main %}
+	<section class="main-cientifico">
+		<br/>
+		<p><h2>{{ cientifico['nombre'] }}</h2></p>
+		<br/>
+
+		{% for foto in fotos %}
+    		<img class="img-cientifico" src="{{ foto['src'] }}" alt="{{ cientifico['nombre'] }}">
+		{% endfor %}
+
+		{{ cientifico['contenido'] }}
+
+		<br/>
+	</section>
+	{% endblock %}

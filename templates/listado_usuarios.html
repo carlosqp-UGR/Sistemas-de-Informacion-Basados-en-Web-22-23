@@ -1,0 +1,101 @@
+{% extends "padre.html" %}
+
+{% block estilo %}
+{{parent()}}
+<style>
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+    }
+
+    input[readonly], select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        background-color: #f2f2f2;
+    }
+
+    button[type="submit"] {
+        padding: 8px 16px;
+        border: none;
+        background: #009cff;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-right: 12px;
+    }
+
+    button[type="submit"]:hover {
+        background: #0076bf;
+    }
+
+    /* Nuevas reglas de estilo */
+    .usuarios-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 24px;
+    }
+
+    .usuario-card {
+        width: 400px;
+        padding: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 2px 2px rgba(0,0,0,0.1);
+    }
+
+    .usuario-card h3 {
+        margin-top: 0;
+    }
+
+    .main h1 {
+        margin-top: 50px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+<section class="main">
+    {% if user.roll == 'super' %}
+        <h1>Lista de usuarios</h1>
+        <div class="usuarios-container">
+        {% for usuario in usuarios %}
+            <div class="usuario-card">
+                <h3>{{ usuario.name }}</h3>
+                <form action="guardar_cambios_rol_usuario.php?id={{ usuario.nick }}" method="post">
+                    <div class="form-group">
+                        <label for="nick">Nick:</label>
+                        <input type="text" name="nick" value="{{ usuario.nick }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" value="{{ usuario.email }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="roll">Rol:</label>
+                        <select name="roll">
+                            <option value="super" {% if usuario.roll == 'super' %}selected{% endif %}>Super</option>
+                            <option value="moderador" {% if usuario.roll == 'moderador' %}selected{% endif %}>Moderador</option>
+                            <option value="gestor_contenido" {% if usuario.roll == 'gestor_contenido' %}selected{% endif %}>Gestor de Contenido</option>
+                            <option value="none" {% if usuario.roll == 'none' %}selected{% endif %}>None</option>
+                        </select>
+                    </div>
+                    <button type="submit">Guardar cambios</button>
+                </form>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <h2>No tienes permiso para acceder a esta sección</h2>
+        <p>Por favor, inicia sesión con una cuenta con permisos</p>
+    {% endif %}
+</section>
+{% endblock %}

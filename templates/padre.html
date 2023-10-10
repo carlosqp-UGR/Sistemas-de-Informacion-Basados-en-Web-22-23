@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cientificos</title>
+	
+	{% block estilo %}
+    <link rel="stylesheet" type="text/css" href="css/estilos.css">
+	{% endblock %}
+
+	{% block script %}
+	{% endblock %}
+	
+</head>
+<body class="grid-container">
+	<header class="header">
+		<div> <img id="logo" src="imgs/img1.png" alt=""> </div>
+		<div> <h1>Científicos Relevantes</h1> </div>
+		<!-- Practica 5: Barra de Búsqueda -->
+		<div class="search-container">
+			<form class="search-form" action="index.php">
+			  <input type="text" id="searchInput" class="search-input" placeholder="Buscar científico..." autocomplete="off">
+			</form>
+			<div id="resultsContainer">
+			  <ul id="resultsList"></ul>
+			</div>
+		</div>
+		<nav class="navbar">				
+			<ul>
+				{% if not user %}
+				<li><a href="login.php">Iniciar Sesion</a></li>
+				{% else %}
+				<li>
+				  <a href="#">Mi Perfil</a>
+				  <ul class="sub-menu">
+					<li><a href="editar_perfil.php">Editar Mi Perfil</a></li>
+					{% if user.roll == 'super' %}
+					  <!-- Aquí va el contenido para el rol 'super' -->
+					  <li><a href="listado_cientificos.php">Listado de Cientificos</a></li>
+					  <li><a href="listado_comentarios.php">Listado de Comentarios</a></li>
+					  <li><a href="listado_usuarios.php">Listado de Usuarios</a></li>
+					{% elseif user.roll == 'moderador' %}
+						<!-- Aquí va el contenido para el rol 'moderador' -->
+						<li><a href="listado_comentarios.php">Listado de Comentarios</a></li>
+					{% elseif user.roll == 'gestor_contenido' %}
+						<!-- Aquí va el contenido para el rol 'gestorContenido' -->
+						<li><a href="listado_cientificos.php">Listado de Cientificos</a></li>
+					{% else %}
+						<!-- Aquí va el contenido para cualquier otro rol o para usuarios no autenticados -->
+					{% endif %}
+					<li><a href="logout.php">Cerrar Sesion</a></li>
+				  </ul>
+				</li>
+				{% endif %}
+				<li><a href="index.php">Inicio</a></li>
+				<li><a href="index.php">Acerca de</a></li>
+				<li><a href="index.php">Servicios</a></li>
+				<li><a href="index.php">Contacto</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<aside class="sidebar">
+		<span>Contenido Adicional<br/></span>
+		<br/><p><a href="https://psicologiaymente.com/cultura/cientificos-mas-famosos-historia" target="blank">Cientificos mas relevantes de la historia</a></p>
+		<br/><p><a href="https://www.significados.com/ciencia/" target="blank">¿Qué es la ciencia? Origen</a></p>
+		<br/><p><a href="https://psicologiaymente.com/cultura/libros-ciencia" target="blank">Top 20 mejores libros sobre ciencia</a></p>
+		<br/><p><a href="https://www.businessinsider.es/10-mejores-peliculas-ciencia-historia-cine-807105" target="blank">Mejores peliculas de ciencia</a></p>
+		<br/><p><a href="https://es.wikipedia.org/wiki/Teor%C3%ADa_de_la_relatividad" target="blank">Teoría de la relatividad</a></p>
+	</aside>
+
+	{% block main %}
+	<!-- Redefinir aquí las características principales de cada página -->
+	{% endblock %}
+
+	{% block comments %}
+	{% endblock %}
+
+	<footer class="footer">
+		<cite> UGR - Sistemas de Información Basados en Web <br/> 
+		Carlos Quesada Perez - 2023&copy;</cite>
+	</footer>
+
+	<!-- Para la barra de búsqueda -->
+	<script src="js/busqueda.js"></script>
+</body>
+</html>

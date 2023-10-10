@@ -1,0 +1,61 @@
+-- Para entrar con el cliente de mysql --
+mysql -h 127.0.0.1 -P 3306 -u web -p
+
+-- Para saber con que base de datos estamos trabajando --
+SELECT DATABASE();
+
+-- Para ver las bases de datos del sistema --
+SHOW DATABASES;
+
+-- Para ver las tablas de la base de datos actual --
+SHOW TABLES;
+
+-- Para cambiar a la base de datos SIBW --
+USE SIBW;
+
+-- Sentencias de creacion de tablas --
+
+CREATE TABLE censura (
+  palabra varchar(100) NOT NULL PRIMARY KEY
+);
+
+CREATE TABLE cientifico (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(200) NOT NULL,
+  contenido TEXT
+);
+
+CREATE TABLE usuario (
+  nick VARCHAR(50) NOT NULL PRIMARY KEY,
+  email VARCHAR(100) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  roll ENUM('super', 'moderador', 'gestor_contenido', 'none') DEFAULT 'none'
+);
+
+CREATE TABLE foto (
+  id INT NOT NULL AUTO_INCREMENT,
+  cientifico INT NOT NULL,
+  src VARCHAR(200) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (cientifico) REFERENCES cientifico(id)
+);
+
+
+CREATE TABLE comentario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cientifico INT,
+    usuario VARCHAR(50),
+    fecha DATE,
+    contenido TEXT,
+    modificado BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (cientifico) REFERENCES cientifico(id),
+    FOREIGN KEY (usuario) REFERENCES usuario(nick)
+);
+
+CREATE VIEW vista_comentarios AS
+SELECT c.id, c.cientifico, u.nick as username, u.email as usermail, c.fecha, c.contenido, c.modificado
+FROM comentario c
+JOIN usuario u ON c.usuario = u.nick;
+
+-- Algunas sentencias de insercion --

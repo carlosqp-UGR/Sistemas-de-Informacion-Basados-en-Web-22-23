@@ -1,0 +1,91 @@
+{% extends "padre.html" %}
+
+{% block estilo %}
+{{parent()}}
+<style>
+    /* Estilos para la lista de científicos */
+    .lista-cientificos {
+        margin-top: 50px;
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .lista-cientificos h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .lista-cientificos .cientifico {
+        background-color: #fff;
+        border-radius: 6px;
+        box-shadow: 0 2px 2px #0002;
+        padding: 8px;
+        margin-bottom: 20px;
+    }
+
+    .lista-cientificos .nombre-cientifico {
+        font-weight: bold;
+    }
+
+    .lista-cientificos .botones-cientifico {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .lista-cientificos .botones-cientifico button {
+        padding: 6px 10px;
+        border: none;
+        border-radius: 3px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .lista-cientificos .botones-cientifico .modificar-cientifico {
+        background-color: #0076bf;
+        color: #fff;
+    }
+
+    .lista-cientificos .botones-cientifico .borrar-cientifico {
+        background-color: #ff0000;
+        color: #fff;
+    }
+
+    /* Estilos para el botón de agregar científico */
+    .agregar-cientifico {
+        display: block;
+        margin: 0 auto;
+        margin-top: 50px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #00a74b;
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+<section class="main">
+    {% if user.roll == 'super' or user.roll == 'gestor_contenido' %}
+        <div class="lista-cientificos">
+            <h1>Lista de científicos</h1>
+            {% for cientifico in cientificos %}
+            <div class="cientifico">
+                <div class="nombre-cientifico">{{ cientifico.nombre }}</div>
+                <div class="botones-cientifico">
+                    <button class="modificar-cientifico" onclick="location.href='editar_cientifico.php?id={{ cientifico.id }}'">Modificar Científico</button>
+                    <button class="borrar-cientifico" onclick="location.href='borrar_cientifico.php?id={{ cientifico.id }}'">Borrar Científico</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="agregar-cientifico" onclick="location.href='agregar_cientifico.php'">Agregar Nuevo Científico</button>
+    {% else %}
+        <h2>No tienes permiso para acceder a esta sección</h2>
+        <p>Por favor, inicia sesión con una cuenta con permisos</p>
+    {% endif %}
+</section>
+{% endblock %}

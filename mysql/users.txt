@@ -1,0 +1,11 @@
+    TABLA RESUMEN DE USUARIOS
+    nick usuario    | contraseña
+    carlosqp        |   realmadrid
+    antoniovg       |   udalmeria
+    luiscl          |   valenciacf
+    miguelope       |   rayo
+    pepeillo        |   fcbarcelona
+    super           |   super
+    moderador       |   moderador
+    gestor_contenido  | gestor_contenido
+    none            |   none

@@ -1,0 +1,122 @@
+{% extends "padre.html" %}
+
+{% block estilo %}
+{{ parent() }}
+<style>
+    .form-box {
+        max-width: 600px;
+        margin: 0 auto;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"], input[type="file"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    button[type="submit"] {
+        padding: 12px 24px;
+        border: none;
+        background: #009cff;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-top: 24px;
+        font-size: 16px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    button[type="submit"]:hover {
+        background: #0076bf;
+        transform: translateY(-2px);
+    }
+
+    button[type="button"] {
+        padding: 12px 24px;
+        border: none;
+        background: #ccc;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-top: 24px;
+        font-size: 16px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    button[type="button"]:hover {
+        background: #aaa;
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+<section class="main">
+    {% if user.roll == 'super' or user.roll == 'gestor_contenido' %}
+    <div class="form-box">
+        <h1>Subir imagen del cientifico</h1>
+        <form action="subir_imagen.php?id={{cientifico.id}}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="imagen">Imagen:</label>
+                <input type="file" name="imagen" id="imagen">
+            </div>
+            <div class="form-group">
+                <button type="submit">Subir imagen</button>
+            </div>
+        </form>
+      </div>
+    <div class="form-box">
+      <h1>Modificar datos del cientifico</h1>
+      <form action="guardar_cambios_cientifico.php?id={{cientifico.id}}" method="post">
+          <div class="form-group">
+              <label for="nombre">Nombre completo:</label>
+              <input type="text" name="nombre" id="nombre" value="{{ cientifico.nombre }}">
+          </div>
+        <div class="form-group">
+            <label for="contenido">Contenido:</label>
+            <textarea name="contenido" rows="5">{{ cientifico.contenido }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="publicado">Estado:</label>
+            <select name="publicado">
+              {% if cientifico.publicado %}
+                <option value="true" selected>Publicado</option>
+                <option value="false">No Publicado</option>
+              {% else %}
+                <option value="true">Publicado</option>
+                <option value="false" selected>No Publicado</option>
+              {% endif %}
+            </select>
+          </div>
+          <div class="form-group">
+              <button type="submit">Guardar cambios</button>
+              <button type="button" onclick="window.location.href='listado_cientificos.php'">Cancelar</button>
+          </div>
+      </form>
+    </div>
+    {% else %}
+    <h2>No tienes permiso para acceder a esta sección</h2>
+    <p>Por favor, inicia sesión con una cuenta con permisos</p>
+    {% endif %}
+</section>
+{% endblock %}
+
+

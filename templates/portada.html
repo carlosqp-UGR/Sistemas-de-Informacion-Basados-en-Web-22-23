@@ -1,0 +1,46 @@
+{% extends "padre.html" %}
+	{% block estilo %}
+	{{ parent() }}
+	<style>
+		.main {
+			/* subgrid de portada.html */
+			text-align: justify;
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: repeat(,1fr);
+			grid-gap:10px;
+		}
+
+		.box {
+			border-radius: 5px;
+			padding: 10px;
+			justify-content: center;
+			text-align: center;
+		}
+
+		.box img {
+			margin: 10%;
+			display: block;
+			width: 80%;
+			height: 80%;
+		}
+
+		.box:hover {
+			background: #75ACEC;
+			font-weight: bold;
+		}
+	</style>
+	{% endblock %}
+
+	{% block main %}
+	<section class="main">
+		{% for cientifico in cientificos %}
+			{% if cientifico.publicado or user.roll == 'super' or user.roll == 'gestor_contenido' %}
+			<a href="cientifico.php?cf={{ cientifico['id'] }}"><article class=box>
+				<img src="{{ cientifico['imagen'] }}">
+				<span>{{ cientifico['nombre'] }}</span>
+			</article></a>
+			{% endif %}
+		{% endfor %}
+	</section>
+	{% endblock %}

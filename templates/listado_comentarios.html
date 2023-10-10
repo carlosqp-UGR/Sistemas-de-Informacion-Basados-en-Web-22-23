@@ -1,0 +1,118 @@
+{% extends "padre.html" %}
+
+    {% block estilo %}
+    {{parent()}}
+    <style>
+        .comment-form, .post-comment .list {
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 2px 2px #0002;
+            padding: 8px;
+            width: 100%;
+        }
+
+        .comment-section {
+            width: 80%;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .post-comment .list {
+            margin-bottom: 12px;
+        }
+
+        .post-comment .list .user-meta, .comment-form .user-meta {
+            display: block;
+            padding: 12px;
+            overflow: hidden;
+        }
+
+        .comment-section .name {
+            font-weight: bold;
+        }
+
+        .post-comment .list .mail {
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        .post-comment .list .day {
+            font-size: 12px;
+        }
+        
+        .post-comment .edit-button {
+            display: inline-block;
+            padding: 6px 10px;
+            border: none;
+            background: #0076bf;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+
+        .post-comment .edit-button:hover {
+            background: #009cff;
+        }
+
+        .post-comment .delete-button {
+            display: inline-block;
+            padding: 6px 10px;
+            border: none;
+            background: #ff0000;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+
+        .post-comment .delete-button:hover {
+            background: #ff6e6e;
+        }
+
+        /* Agregamos estas propiedades para aumentar la separación */
+        .main h1 {
+            margin-top: 50px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .list {
+            margin-bottom: 20px;
+        }
+        
+        /* Modificamos el botón de guardar cambios */
+        .edit-button {
+            background-color: #007bff;
+        }
+    </style>
+    {% endblock %}
+    
+    {% block main %}
+    <section class="main">
+        {% if user.roll == 'super' or user.roll == 'moderador' %}
+            <h1>Lista de comentarios</h1>
+            <div class="comment-section">
+                <div class="post-comment">
+                    {% for comentario in comentarios %}
+                    <div class="list">
+                        <div class="user-meta">
+                            <div class="name">{{ comentario['username'] }}</div>
+                            <div class="mail">{{ comentario['usermail'] }}</div>
+                            <div class="day">{{ comentario['fecha'] }}</div>
+                            {%if comentario.modificado%}
+							<div class="mail">Atencion: Comentario modificado por MODERADOR.</div>
+						    {%endif%}
+                        </div>
+                        <div class="comment-cnt">{{ comentario['contenido'] }}</div>
+                        <button class="edit-button" onclick="location.href='editar_comentario.php?id={{ comentario['id'] }}'">Editar Comentario</button>
+                        <button class="delete-button" onclick="location.href='borrar_comentario.php?id={{ comentario['id'] }}'">Eliminar Comentario</button>
+                    </div>
+                    {% endfor %}
+                </div>
+        {% else %}
+            <h2>No tienes permiso para acceder a esta sección</h2>
+            <p>Por favor, inicia sesión con una cuenta con permisos</p>
+        {% endif %}
+    </section>
+    {% endblock %}
